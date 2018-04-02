@@ -7,7 +7,8 @@
 			+ path + "/";  
     String imgPath=	request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
-			+ "/img/";  
+			+ path
+			+ "/img/";
 
 %>
 

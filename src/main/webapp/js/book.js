@@ -34,7 +34,7 @@ function getList(page){
  			var str="";
  			if(data.data.pageDate!=null){
  				var basepath=$("#basepath").val();
- 				basepath=basepath.replace("bookshop","img");
+ 				basepath=basepath + "img/";
  				$.each(data.data.pageDate,function(index,item){
  					var imgpath=basepath+item.picture;
  					str=str+"<tr>"

@@ -26,7 +26,7 @@
 		<div class="header bg-main">
 			<div class="logo margin-big-left fadein-top">
 				<h1>
-					<img src="images/y.jpg" class="radius-circle rotate-hover"
+					<img src="img/y.jpg" class="radius-circle rotate-hover"
 						height="50" alt="" />
 					图书商城后台管理
 				</h1>
