@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.BookDao">
+   <resultMap type="com.book.entity.Book" id="bookMap">
+   <id property="id" column="id"/>
+   <result property="name" column="name"/>
+   <result property="price" column="price"/>
+   <result property="author" column="author"/>
+   <result property="detail" column="detail"/>
+   <result property="picture" column="picture"/>
+   <association property="bookType" column="typeid" select="com.book.dao.BookTypeDao.getBookTypeMapById"> 
+   </association>
+   </resultMap>
+   <insert id="insert" parameterType="com.book.entity.Book" keyProperty="id" useGeneratedKeys="true">
+      insert into book(typeid,name,price,author,detail,picture)
+      values(#{bookType.id},#{name},#{price},#{author},#{detail},#{picture})
+   </insert>
+  <select id="getCount" parameterType="map" resultType="int">
+    select count(1) from book where 1=1
+    <if test="typeid != 0">
+         and typeid=#{typeid}
+    </if>
+    <if test="name!='' and name!=null">
+         and name like concat('%',#{name},'%')
+    </if>
+  </select>
+  <select id="getBookList" parameterType="com.book.entity.PageBean" resultMap="bookMap">
+    select * from book where 1=1
+       <if test="map.typeid != 0">
+         and typeid=#{map.typeid}
+       </if>
+       <if test="map.name!='' and map.name!=null">
+         and name like concat('%',#{map.name},'%')
+       </if> 
+      limit #{beginCount},#{pageCount}
+  </select>
+  <delete id="delete" parameterType="int">
+    delete from book where id=#{id}
+  </delete>
+  
+  <select id="selectById" parameterType="int" resultMap="bookMap">
+     select * from book where id =#{id}
+  </select>
+  <update id="update" parameterType="com.book.entity.Book">
+      update book 
+      <set>
+         <if test="name!='' and name!=null">
+            name=#{name},
+         </if>
+         <if test="author!='' and author!=null">
+            author=#{author},
+         </if>
+         <if test="picture!='' and picture!=null">
+            picture=#{picture},
+         </if>
+          <if test="price!=0">
+            price=#{price},
+         </if>
+          <if test="detail!='' and detail!=null">
+            detail=#{detail}
+         </if>
+          where id=#{id}
+      </set>
+  </update>
+  <select id="getCountByTypeId" parameterType="int" resultType="int" >
+  select count(1) from book where typeid=#{typeid}
+  </select>
+</mapper>
